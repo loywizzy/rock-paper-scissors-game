@@ -11,15 +11,18 @@ export default {
       player2score: 0
     }
   },
+
   methods: {
     playGame() {
-      const player1 = Math.floor(Math.random() * 3) + 1
-      const player2 = Math.floor(Math.random() * 3) + 1
+      const player1 = Math.floor(Math.random() * 4) + 1
+      const player2 = Math.floor(Math.random() * 4) + 1
 
       if (player1 === 1) {
         this.player1ImgUrl = new URL('./img/rock.png', import.meta.url).href
       } else if (player1 === 2) {
         this.player1ImgUrl = new URL('./img/scissors.png', import.meta.url).href
+      } else if (player1 === 4) {
+        this.player1ImgUrl = new URL('./img/heart.png', import.meta.url).href
       } else {
         this.player1ImgUrl = new URL('./img/paper.png', import.meta.url).href
       }
@@ -28,6 +31,8 @@ export default {
         this.player2ImgUrl = new URL('./img/rock.png', import.meta.url).href
       } else if (player2 === 2) {
         this.player2ImgUrl = new URL('./img/scissors.png', import.meta.url).href
+      } else if (player2 === 4) {
+        this.player2ImgUrl = new URL('./img/heart.png', import.meta.url).href
       } else {
         this.player2ImgUrl = new URL('./img/paper.png', import.meta.url).href
       }
@@ -37,7 +42,11 @@ export default {
       } else if (
         (player1 === 1 && player2 === 2) ||
         (player1 === 2 && player2 === 3) ||
-        (player1 === 3 && player2 === 1)
+        (player1 === 3 && player2 === 1) ||
+        (player1 === 4 && player2 === 2) ||
+        (player1 === 4 && player2 === 3) ||
+        (player1 === 4 && player2 === 1)
+        
       ) {
         this.result = 'Player 1 Win'
         this.player1score++
@@ -45,9 +54,18 @@ export default {
         this.result = 'Player 2 Win'
         this.player2score++
       }
+    },
+    
+    restartGame() {
+      this.player1ImgUrl = new URL('./img/p1.png', import.meta.url).href,
+      this.player2ImgUrl = new URL('./img/p2.png', import.meta.url).href,
+      this.result = 'Click Play!!',
+      this.player1score = 0,
+      this.player2score = 0
     }
   }
 }
+
 </script>
 
 
@@ -66,6 +84,6 @@ export default {
     </div>
     <p>{{ result }}</p>
     <p>Score : {{ player1score }} - {{ player2score }}</p>
-    <button @click="playGame">Play!!</button>
+    <button @click="playGame">Play!!</button> <button @click="restartGame">Restart!!</button>
   </div>
 </template>
